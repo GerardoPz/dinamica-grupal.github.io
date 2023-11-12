@@ -76,7 +76,8 @@ const valueGenerator = (angleValue) => {
     ) {
       modalContent.innerHTML = `Equipo: ${rotationValues[i].value}`;
       question.innerHTML = randomQuestion().question;
-
+      console.log(randomQuestion().question);
+      console.log(randomQuestion().answer);
       spinBtn.disabled = false;
 
       // Eliminar el equipo del gráfico
@@ -165,4 +166,89 @@ function randomQuestion() {
   return qaArray[randomIndex];
 }
 
-console.log(randomQuestion());
+// Palabra a adivinar
+let word = "texto";
+let wordArray = word.split("");
+
+// Array para almacenar las letras ingresadas por el usuario
+let arrayUser = [];
+
+// Bandera para determinar si el juego ha sido ganado
+let won = false;
+
+// Contador de intentos
+let intentos = 0;
+
+// Función para inicializar el juego
+function startGame() {
+  // Reiniciar variables
+  arrayUser = [];
+  won = false;
+  intentos = 0;
+
+  // Inicializar el primer row-word
+  createRowWord();
+}
+
+// Función para crear un nuevo row-word y eliminar el anterior
+function createRowWord() {
+  // Seleccionar el contenedor donde se insertará el row-word
+  const containerElement = document.getElementById("row-word-container");
+
+  // Elimina el row-word anterior, si existe dentro del contenedor
+  let existingRowWord = containerElement.querySelector(".row-word");
+  if (existingRowWord) {
+    existingRowWord.remove();
+  }
+
+  let newRowWord = document.createElement("div");
+  newRowWord.className = "row-word";
+  containerElement.appendChild(newRowWord);
+  createInput(wordArray, newRowWord);
+}
+
+// Función para crear los cuadros de entrada
+function createInput(array, rowWord) {
+  rowWord.innerHTML = "";
+  array.forEach(() => {
+    let input = document.createElement("input");
+    input.type = "text";
+    input.maxLength = 1;
+    input.className = "square";
+    rowWord.appendChild(input);
+  });
+  rowWord.firstChild.classList.add("focus");
+}
+
+// Función para verificar la palabra ingresada por el usuario
+function checkWord() {
+  intentos++;
+
+  if (arrayUser.join("") !== word) {
+    if (intentos >= 5) {
+      alert("Perdiste");
+      console.log("Perdiste");
+    } else {
+      createRowWord(); // Crea un nuevo row-word para continuar adivinando
+    }
+  } else {
+    alert("¡Has ganado! En " + intentos + " intentos");
+    console.log("¡Has ganado! En " + intentos + " intentos");
+    won = true;
+  }
+}
+
+// Evento para detectar la entrada de texto del usuario
+document.addEventListener("input", (event) => {
+  if (!won && event.target.classList.contains("square")) {
+    arrayUser.push(event.target.value.toLowerCase());
+    if (event.target.nextElementSibling) {
+      event.target.nextElementSibling.focus();
+    } else {
+      checkWord(); // Verificar la palabra cuando se completen todos los campos
+    }
+  }
+});
+
+// Iniciar el juego al cargar la página
+startGame();

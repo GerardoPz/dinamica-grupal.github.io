@@ -114,8 +114,8 @@ img {
 
 .modal-content {
   border: 1px solid red;
-  width: 80%;
-  height: 80%;
+  width: 50%;
+  height: 90%;
   background-color: #fefefe;
   position: absolute;
   top: 50%;
@@ -135,4 +135,40 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.row-word-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  gap: 0.5em;
+  margin-bottom: 10px;
+}
+
+.square {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #192d5b;
+  outline: none;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-align: center;
+}
+
+.green {
+  background-color: #6aaa64;
+}
+
+.gold {
+  background-color: #f9d342;
+}
+
+.gray {
+  background-color: #bfbfbf;
 }
